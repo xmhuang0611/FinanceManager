@@ -1,16 +1,22 @@
 package com.citi.financemanager.Entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.Id;
+
+@Document(collection = "income")
 public class IncomeEntity {
-    private int id;
+    @Id
+    private String id;
     private String date;
     private double value;
     private String description;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

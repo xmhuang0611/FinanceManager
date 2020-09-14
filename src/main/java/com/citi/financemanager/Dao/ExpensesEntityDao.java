@@ -13,7 +13,7 @@ public interface ExpensesEntityDao {
 
     public void updateItemInExpenses(ExpensesEntity ExpensesEntity);
 
-    public double getTotalAccout();
+    public double getTotalAccount();
 
 
 }

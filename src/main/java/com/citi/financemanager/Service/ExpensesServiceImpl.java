@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ExpensesServiceImple implements ExpensesService {
+public class ExpensesServiceImpl implements ExpensesService {
 
     @Autowired
     ExpensesEntityDao expensesEntityDao;
@@ -44,7 +44,7 @@ public class ExpensesServiceImple implements ExpensesService {
     }
 
     @Override
-    public Boolean IfCategoriesContainsId(int id) {
+    public Boolean IfCategoriesContainsId(String id) {
         return categoriesEntityDao.ifCategoryContainsId(id);
     }
 
@@ -54,7 +54,7 @@ public class ExpensesServiceImple implements ExpensesService {
     }
 
     @Override
-    public void deleteItemInCategories(int id) {
+    public void deleteItemInCategories(String id) {
         categoriesEntityDao.deleteItemInCategories(id);
     }
 }

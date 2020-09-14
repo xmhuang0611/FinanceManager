@@ -24,7 +24,7 @@ public class HomeItemsServiceImpl implements HomeItemsService {
     @Override
     public HomeItems getHomeItems() {
         double expenses, incomeValue, budget, accountValue;
-        expenses = expensesEntityDao.getTotalAccout();
+        expenses = expensesEntityDao.getTotalAccount();
         incomeValue = incomeEntityDao.getTotalIncome();
         budget = budgetEntityDao.getCurrentBudget();
         accountValue = accountEntityDao.getAccountValue();

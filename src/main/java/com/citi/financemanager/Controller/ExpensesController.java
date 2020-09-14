@@ -5,13 +5,12 @@ import com.citi.financemanager.Entity.ExpensesEntity;
 import com.citi.financemanager.Service.ExpensesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/expenses")
 public class ExpensesController {
 
@@ -50,7 +49,7 @@ public class ExpensesController {
     }
 
     @DeleteMapping("/category_manage/{id}")
-    public ResponseEntity deleteItemInCategory(@PathVariable int id) {
+    public ResponseEntity deleteItemInCategory(@PathVariable String id) {
         if (!expensesService.IfCategoriesContainsId(id))
             return ResponseEntity.notFound().build();
         else {

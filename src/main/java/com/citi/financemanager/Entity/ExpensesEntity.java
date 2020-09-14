@@ -1,8 +1,14 @@
 package com.citi.financemanager.Entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.Id;
+
+@Document(collection = "expenses")
 public class ExpensesEntity {
-    private int id;
-    private int categoryId;
+    @Id
+    private String id;
+    private String categoryName;
     private double value;
     private String date;
     private String description;
@@ -15,20 +21,20 @@ public class ExpensesEntity {
         this.description = description;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public double getValue() {

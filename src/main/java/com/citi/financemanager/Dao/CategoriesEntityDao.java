@@ -9,9 +9,9 @@ public interface CategoriesEntityDao {
 
     public void addItemToCategories(CategoriesEntity categoriesEntity);
 
-    public void deleteItemInCategories(int id);
+    public void deleteItemInCategories(String id);
 
     public void updateItemInCategories(CategoriesEntity categoriesEntity);
 
-    public boolean ifCategoryContainsId(int id);
+    public boolean ifCategoryContainsId(String id);
 }
