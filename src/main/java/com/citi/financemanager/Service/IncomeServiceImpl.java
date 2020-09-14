@@ -1,0 +1,32 @@
+package com.citi.financemanager.Service;
+
+import com.citi.financemanager.Dao.AccountEntityDao;
+import com.citi.financemanager.Dao.IncomeEntityDao;
+import com.citi.financemanager.Entity.IncomeEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+i
+
+@Service
+public class IncomeServiceImpl implements IncomeService {
+    @Autowired
+    IncomeEntityDao incomeEntityDao;
+    @Autowired
+    AccountEntityDao accountEntityDao;
+
+    @Override
+    public List<IncomeEntity> getIncomesList() {
+        return incomeEntityDao.getAllIncome();
+    }
+
+    @Override
+    public void addIncome(IncomeEntity incomeEntity) {
+        incomeEntityDao.addItemToIncome(incomeEntity);
+        double account = accountEntityDao.getAccountValue();
+        account += incomeEntity.getValue();
+        accountEntityDao.updateAccount(account);
+    }
+}
