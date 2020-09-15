@@ -1,10 +1,14 @@
 package com.citi.financemanager.Dao;
 
 import com.citi.financemanager.Entity.BudgetEntity;
+import com.citi.financemanager.Entity.IncomeEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,19 +31,24 @@ public class BudgetEntityDaoImpl implements BudgetEntityDao {
 
 
     public void deleteBudgetItem(BudgetEntity budgetEntity) {
-        mongoTemplate.remove(budgetEntity);
+        Query query = new Query(Criteria.where("dateByMonth").is(budgetEntity.getDateByMonth()));
+        mongoTemplate.remove(query,BudgetEntity.class);
     }
 
 
     public void modifyBudgetItem(BudgetEntity budgetEntity) {
-        mongoTemplate.update(BudgetEntity.class);
+        Query query = new Query(Criteria.where("dateByMonth").is(budgetEntity.getDateByMonth()));
+        Update update = new Update();
+        update.set("value", budgetEntity.getValue());
+        mongoTemplate.updateFirst(query, update, BudgetEntity.class);
     }
 
     public double getCurrentBudget() {
         return mongoTemplate.findAll(BudgetEntity.class).get(0).getValue();
     }
 
-    public boolean ifContainsBudget() {
-        return mongoTemplate.findAll(BudgetEntity.class).isEmpty();
+    public boolean ifContainsBudget(BudgetEntity budgetEntity) {
+        Query query = new Query(Criteria.where("dateByMonth").is(budgetEntity.getDateByMonth()));
+        return mongoTemplate.findOne(query,BudgetEntity.class)!=null;
     }
 }
