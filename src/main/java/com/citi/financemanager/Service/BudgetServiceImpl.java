@@ -19,11 +19,21 @@ public class BudgetServiceImpl implements BudgetService {
 
     @Override
     public boolean ifContainsBudget(BudgetEntity budgetEntity) {
-        return budgetEntityDao.ifContainsBudget();
+        return budgetEntityDao.ifContainsBudget(budgetEntity);
     }
 
     @Override
     public void modifyBudget(BudgetEntity budgetEntity) {
         budgetEntityDao.modifyBudgetItem(budgetEntity);
+    }
+
+    @Override
+    public void addItemToBudget(BudgetEntity budgetEntity) {
+        budgetEntityDao.addItemToBudget(budgetEntity);
+    }
+
+    @Override
+    public void deleteBudgetItem(BudgetEntity budgetEntity) {
+        budgetEntityDao.deleteBudgetItem(budgetEntity);
     }
 }

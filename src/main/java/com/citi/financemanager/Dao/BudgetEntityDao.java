@@ -15,5 +15,5 @@ public interface BudgetEntityDao {
 
     public double getCurrentBudget();
 
-    public boolean ifContainsBudget();
+    public boolean ifContainsBudget(BudgetEntity budgetEntity);
 }

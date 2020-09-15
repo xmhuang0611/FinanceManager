@@ -11,4 +11,8 @@ public interface BudgetService {
     public boolean ifContainsBudget(BudgetEntity budgetEntity);
 
     public void modifyBudget(BudgetEntity budgetEntity);
+
+    public void addItemToBudget(BudgetEntity budgetEntity);
+
+    public void deleteBudgetItem(BudgetEntity budgetEntity);
 }
