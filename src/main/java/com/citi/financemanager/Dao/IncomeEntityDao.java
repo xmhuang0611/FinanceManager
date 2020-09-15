@@ -9,9 +9,9 @@ public interface IncomeEntityDao {
 
     public void addItemToIncome(IncomeEntity IncomeEntity);
 
-    public void deleteItemInIncome(IncomeEntity IncomeEntity);
+    public void deleteItemInIncome(IncomeEntity incomeEntity);
 
-    public void updateItemInIncome(IncomeEntity IncomeEntity);
+    public void updateItemInIncome(IncomeEntity incomeEntity);
 
     public double getTotalIncome();
 }

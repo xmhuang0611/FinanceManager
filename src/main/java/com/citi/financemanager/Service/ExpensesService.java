@@ -15,9 +15,11 @@ public interface ExpensesService {
 
     public List<CategoriesEntity> getAllCategories();
 
-    public Boolean IfCategoriesContainsId(String id);
-
     public void modifyItemInCategories(CategoriesEntity categoriesEntity);
 
     public void deleteItemInCategories(String id);
+
+    public void deleteItemInExpenses(ExpensesEntity expensesEntity);
+
+    public void updateItemInExpenses(ExpensesEntity expensesEntity);
 }

@@ -19,14 +19,21 @@ public class BudgetController {
         return budgetService.getAllBudget();
     }
 
-    @PutMapping(value = "/manage", consumes = {"application/json", "application/xml"})
+    @PutMapping(value = "/budget_add", consumes = {"application/json", "application/xml"})
+    public ResponseEntity addBudget(@RequestBody BudgetEntity item) {
+        budgetService.addItemToBudget(item);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value = "/budget_modify", consumes = {"application/json", "application/xml"})
     public ResponseEntity modifyBudget(@RequestBody BudgetEntity item) {
-        if (!budgetService.ifContainsBudget(item))
-            return ResponseEntity.notFound().build();
-        else {
-            budgetService.modifyBudget(item);
-            return ResponseEntity.ok().build();
-        }
+        budgetService.modifyBudget(item);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping(value = "/budget_delete", consumes = {"application/json", "application/xml"})
+    public void deleteBudgetItem(@RequestBody BudgetEntity budgetEntity) {
+        budgetService.deleteBudgetItem(budgetEntity);
     }
 
 

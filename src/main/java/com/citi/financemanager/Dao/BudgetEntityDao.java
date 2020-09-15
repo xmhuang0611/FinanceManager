@@ -14,6 +14,4 @@ public interface BudgetEntityDao {
     public void modifyBudgetItem(BudgetEntity budgetEntity);
 
     public double getCurrentBudget();
-
-    public boolean ifContainsBudget();
 }

@@ -27,7 +27,8 @@ public class CategoriesEntityDaoImpl implements CategoriesEntityDao {
     }
 
     public void deleteItemInCategories(String id) {
-        mongoTemplate.remove(new Query(Criteria.where("_id").is(id)));
+        Query query = new Query(Criteria.where("_id").is(id));
+        mongoTemplate.remove(query, "category");
     }
 
     public void updateItemInCategories(CategoriesEntity categoriesEntity) {

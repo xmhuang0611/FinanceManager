@@ -39,22 +39,28 @@ public class ExpensesServiceImpl implements ExpensesService {
     }
 
     @Override
-    public List<CategoriesEntity> getAllCategories() {
-        return categoriesEntityDao.getAllCategories();
-    }
-
-    @Override
-    public Boolean IfCategoriesContainsId(String id) {
-        return categoriesEntityDao.ifCategoryContainsId(id);
-    }
-
-    @Override
     public void modifyItemInCategories(CategoriesEntity categoriesEntity) {
         categoriesEntityDao.updateItemInCategories(categoriesEntity);
+    }
+
+    @Override
+    public void updateItemInExpenses(ExpensesEntity expensesEntity) {
+        expensesEntityDao.updateItemInExpenses(expensesEntity);
     }
 
     @Override
     public void deleteItemInCategories(String id) {
         categoriesEntityDao.deleteItemInCategories(id);
     }
+
+    @Override
+    public void deleteItemInExpenses(ExpensesEntity expensesEntity) {
+        expensesEntityDao.deleteItemInExpenses(expensesEntity);
+    }
+
+    @Override
+    public List<CategoriesEntity> getAllCategories() {
+        return categoriesEntityDao.getAllCategories();
+    }
+
 }

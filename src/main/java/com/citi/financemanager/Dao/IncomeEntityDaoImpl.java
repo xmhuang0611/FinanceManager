@@ -28,7 +28,8 @@ public class IncomeEntityDaoImpl implements IncomeEntityDao {
     }
 
     public void deleteItemInIncome(IncomeEntity incomeEntity) {
-        mongoTemplate.remove(new Query(Criteria.where("_id").is(incomeEntity.getId())));
+        Query query = new Query(Criteria.where("_id").is(incomeEntity.getId()));
+        mongoTemplate.remove(query, "income");
     }
 
     public void updateItemInIncome(IncomeEntity incomeEntity) {

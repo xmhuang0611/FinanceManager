@@ -28,4 +28,19 @@ public class IncomeServiceImpl implements IncomeService {
         account += incomeEntity.getValue();
         accountEntityDao.updateAccount(account);
     }
+
+    @Override
+    public void updateItemInIncome(IncomeEntity incomeEntity) {
+        incomeEntityDao.updateItemInIncome(incomeEntity);
+    }
+
+    @Override
+    public void deleteItemInIncome(IncomeEntity incomeEntity) {
+        incomeEntityDao.deleteItemInIncome(incomeEntity);
+    }
+
+    @Override
+    public double getTotalIncome() {
+        return incomeEntityDao.getTotalIncome();
+    }
 }
