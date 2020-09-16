@@ -5,6 +5,7 @@ import com.citi.financemanager.Entity.CategoriesEntity;
 import com.citi.financemanager.Entity.ExpensesEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ExpensesService {
     public List<ExpensesEntity> getAllExpenses();
@@ -21,5 +22,9 @@ public interface ExpensesService {
 
     public void deleteItemInExpenses(ExpensesEntity expensesEntity);
 
-    public void updateItemInExpenses(ExpensesEntity expensesEntity);
+
+    public Map<String, Double> getCategoryExpense();
+
+    public void updateExpense(ExpensesEntity expensesEntity);
+
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ExpensesServiceImpl implements ExpensesService {
@@ -43,10 +44,6 @@ public class ExpensesServiceImpl implements ExpensesService {
         categoriesEntityDao.updateItemInCategories(categoriesEntity);
     }
 
-    @Override
-    public void updateItemInExpenses(ExpensesEntity expensesEntity) {
-        expensesEntityDao.updateItemInExpenses(expensesEntity);
-    }
 
     @Override
     public void deleteItemInCategories(String id) {
@@ -56,11 +53,30 @@ public class ExpensesServiceImpl implements ExpensesService {
     @Override
     public void deleteItemInExpenses(ExpensesEntity expensesEntity) {
         expensesEntityDao.deleteItemInExpenses(expensesEntity);
+        double account = accountEntityDao.getAccountValue();
+        account += expensesEntity.getValue();
+        accountEntityDao.updateAccount(account);
     }
 
     @Override
     public List<CategoriesEntity> getAllCategories() {
         return categoriesEntityDao.getAllCategories();
+    }
+
+    @Override
+    public Map<String, Double> getCategoryExpense() {
+        return expensesEntityDao.getCategoryExpense();
+    }
+
+    @Override
+    public void updateExpense(ExpensesEntity expensesEntity) {
+        String id = expensesEntity.getId();
+        double pre_expenses = expensesEntityDao.getExpenses(id);
+        expensesEntityDao.updateItemInExpenses(expensesEntity);
+        double new_expenses = expensesEntity.getValue();
+        double account = accountEntityDao.getAccountValue();
+        account = account + pre_expenses - new_expenses;
+        accountEntityDao.updateAccount(account);
     }
 
 }

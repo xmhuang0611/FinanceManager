@@ -24,12 +24,11 @@ public class AccountEntityDaoImpl implements AccountEntityDao {
         return ac.get(0).getValue();
     }
 
-    public double updateAccount(double value) {
+    public void updateAccount(double value) {
         List<AccountEntity> ac = mongoTemplate.findAll(AccountEntity.class);
         String id = ac.get(0).getId();
         Query query = new Query(Criteria.where("_id").is(id));
         Update update = Update.update("value", value);
         mongoTemplate.updateFirst(query, update, AccountEntity.class);
-        return 0;
     }
 }

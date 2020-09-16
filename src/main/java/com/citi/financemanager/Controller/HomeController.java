@@ -14,6 +14,7 @@ public class HomeController {
     @Autowired
     HomeItemsService homeItemsService;
 
+    //get all home items
     @GetMapping(value = "/home", produces = {"application/json", "application/xml"})
     public HomeItems getAllItems() {
         return homeItemsService.getHomeItems();

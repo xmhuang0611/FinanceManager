@@ -8,6 +8,8 @@ import com.citi.financemanager.Entity.HomeItems;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 
 @Service
 public class HomeItemsServiceImpl implements HomeItemsService {
@@ -23,13 +25,23 @@ public class HomeItemsServiceImpl implements HomeItemsService {
 
     @Override
     public HomeItems getHomeItems() {
-        double expenses, incomeValue, budget, accountValue;
-        expenses = expensesEntityDao.getTotalAccount();
-        incomeValue = incomeEntityDao.getTotalIncome();
-        budget = budgetEntityDao.getCurrentBudget();
-        accountValue = accountEntityDao.getAccountValue();
+        double expensesValue, incomeValue, budget, accountValue;
+        expensesValue = expensesEntityDao.getTotalAccount();
+        BigDecimal b = new BigDecimal(expensesValue);
+        expensesValue = b.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
 
-        HomeItems homeItems = new HomeItems(expenses, incomeValue, budget, accountValue);
-        return homeItems;
+        incomeValue = incomeEntityDao.getTotalIncome();
+        BigDecimal c = new BigDecimal(incomeValue);
+        incomeValue = c.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+
+        budget = budgetEntityDao.getCurrentBudget();
+        BigDecimal d = new BigDecimal(budget);
+        budget = d.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+
+        accountValue = accountEntityDao.getAccountValue();
+        BigDecimal e = new BigDecimal(accountValue);
+        accountValue = e.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+
+        return new HomeItems(expensesValue, incomeValue, budget, accountValue);
     }
 }

@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ExpensesEntityDaoImpl implements ExpensesEntityDao {
@@ -19,11 +20,12 @@ public class ExpensesEntityDaoImpl implements ExpensesEntityDao {
     MongoTemplate mongoTemplate;
 
     public List<ExpensesEntity> getAllExpenses() {
-        return mongoTemplate.findAll(ExpensesEntity.class, "expenses");
+        return mongoTemplate.findAll(ExpensesEntity.class, "expense");
     }
 
     public void addItemToExpenses(ExpensesEntity expensesEntity) {
         mongoTemplate.insert(expensesEntity);
+
     }
 
     public void deleteItemInExpenses(ExpensesEntity expensesEntity) {
@@ -31,22 +33,35 @@ public class ExpensesEntityDaoImpl implements ExpensesEntityDao {
     }
 
     public void updateItemInExpenses(ExpensesEntity expensesEntity) {
-        Query query = new Query(Criteria.where("_id").is(expensesEntity.getId()));
-        Update update = new Update();
-        update.set("value", expensesEntity.getValue());
-        update.set("categoryId", expensesEntity.getCategoryName());
-        update.set("date", expensesEntity.getDate());
-        update.set("description", expensesEntity.getDescription());
-
-        mongoTemplate.updateFirst(query, update, ExpensesEntity.class);
+        mongoTemplate.save(expensesEntity);
     }
 
     public double getTotalAccount() {
         List<ExpensesEntity> result = mongoTemplate.findAll(ExpensesEntity.class);
-        double totalValue = 0;
+        double totalValue = 0.00;
         for (ExpensesEntity es : result) {
             totalValue += es.getValue();
         }
         return totalValue;
+    }
+
+    public Map<String, Double> getCategoryExpense() {
+        Map<String, Double> map = new HashMap<>();
+        List<ExpensesEntity> result = mongoTemplate.findAll(ExpensesEntity.class);
+        for (ExpensesEntity es : result) {
+            if (map.containsKey(es.getCategoryName())) {
+                map.put(es.getCategoryName(), map.get(es.getCategoryName()) + es.getValue());
+            } else {
+                map.put(es.getCategoryName(), es.getValue());
+            }
+        }
+        return map;
+    }
+
+
+    public double getExpenses(String id) {
+        Query query = new Query(Criteria.where("_id").is(id));
+        ExpensesEntity expensesEntity = mongoTemplate.find(query, ExpensesEntity.class).get(0);
+        return expensesEntity.getValue();
     }
 }

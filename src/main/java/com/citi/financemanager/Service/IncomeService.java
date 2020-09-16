@@ -15,4 +15,6 @@ public interface IncomeService {
     public void deleteItemInIncome(IncomeEntity incomeEntity);
 
     public double getTotalIncome();
+
+    public void updateIncome(IncomeEntity incomeEntity);
 }

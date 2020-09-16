@@ -50,4 +50,10 @@ public class IncomeEntityDaoImpl implements IncomeEntityDao {
         }
         return totalValue;
     }
+
+    public double getIncome(String id) {
+        Query query = new Query(Criteria.where("_id").is(id));
+        IncomeEntity incomeEntity = mongoTemplate.find(query, IncomeEntity.class).get(0);
+        return incomeEntity.getValue();
+    }
 }

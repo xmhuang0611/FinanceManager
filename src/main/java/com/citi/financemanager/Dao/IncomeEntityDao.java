@@ -14,4 +14,6 @@ public interface IncomeEntityDao {
     public void updateItemInIncome(IncomeEntity incomeEntity);
 
     public double getTotalIncome();
+
+    public double getIncome(String id);
 }

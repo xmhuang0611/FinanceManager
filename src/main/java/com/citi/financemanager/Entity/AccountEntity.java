@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class AccountEntity {
     @Id
     private String id;
-    private int value;
+    private double value;
 
     public String getId() {
         return id;
@@ -18,11 +18,11 @@ public class AccountEntity {
         this.id = id;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 }

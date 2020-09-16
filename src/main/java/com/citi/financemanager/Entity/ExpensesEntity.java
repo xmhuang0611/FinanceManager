@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
 
-@Document(collection = "expenses")
+@Document(collection = "expense")
 public class ExpensesEntity {
     @Id
     private String id;

@@ -14,23 +14,27 @@ public class BudgetController {
     @Autowired
     BudgetService budgetService;
 
+    //get all budget items
     @GetMapping(value = "/details", produces = {"application/json", "application/xml"})
     public List<BudgetEntity> getAllBudget() {
         return budgetService.getAllBudget();
     }
 
+    //add budget
     @PutMapping(value = "/budget_add", consumes = {"application/json", "application/xml"})
     public ResponseEntity addBudget(@RequestBody BudgetEntity item) {
         budgetService.addItemToBudget(item);
         return ResponseEntity.ok().build();
     }
 
+    //modify one budget
     @PutMapping(value = "/budget_modify", consumes = {"application/json", "application/xml"})
     public ResponseEntity modifyBudget(@RequestBody BudgetEntity item) {
         budgetService.modifyBudget(item);
         return ResponseEntity.ok().build();
     }
 
+    //delete one budget
     @DeleteMapping(value = "/budget_delete", consumes = {"application/json", "application/xml"})
     public void deleteBudgetItem(@RequestBody BudgetEntity budgetEntity) {
         budgetService.deleteBudgetItem(budgetEntity);
