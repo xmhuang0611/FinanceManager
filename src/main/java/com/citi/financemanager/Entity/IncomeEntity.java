@@ -12,6 +12,13 @@ public class IncomeEntity {
     private double value;
     private String description;
 
+    public IncomeEntity(String id, String date, double value, String description) {
+        this.id = id;
+        this.date = date;
+        this.value = value;
+        this.description = description;
+    }
+
     public String getId() {
         return id;
     }

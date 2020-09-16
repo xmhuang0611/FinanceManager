@@ -10,6 +10,11 @@ public class CategoriesEntity {
     private String id;
     private String name;
 
+    public CategoriesEntity(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public String getId() {
         return id;
     }

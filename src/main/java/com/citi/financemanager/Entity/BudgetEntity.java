@@ -14,6 +14,12 @@ public class BudgetEntity {
     public BudgetEntity() {
     }
 
+    public BudgetEntity(String id, String dateByMonth, double value) {
+        this.id = id;
+        this.dateByMonth = dateByMonth;
+        this.value = value;
+    }
+
     public BudgetEntity(String dateByMonth) {
         this.dateByMonth = dateByMonth;
     }

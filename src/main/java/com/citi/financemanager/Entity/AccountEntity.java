@@ -10,6 +10,11 @@ public class AccountEntity {
     private String id;
     private double value;
 
+    public AccountEntity(String id, double value) {
+        this.id = id;
+        this.value = value;
+    }
+
     public String getId() {
         return id;
     }

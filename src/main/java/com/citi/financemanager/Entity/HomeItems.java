@@ -6,6 +6,7 @@ public class HomeItems {
     private double budget;
     private double accountValue;
 
+
     public HomeItems(double expensesValue, double incomeValue, double budget, double accountValue) {
         this.expensesValue = expensesValue;
         this.incomeValue = incomeValue;

@@ -13,6 +13,14 @@ public class ExpensesEntity {
     private String date;
     private String description;
 
+    public ExpensesEntity(String id, String categoryName, double value, String date, String description) {
+        this.id = id;
+        this.categoryName = categoryName;
+        this.value = value;
+        this.date = date;
+        this.description = description;
+    }
+
     public String getDescription() {
         return description;
     }
