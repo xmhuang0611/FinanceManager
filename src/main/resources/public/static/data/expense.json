@@ -1,0 +1,91 @@
+[{
+  "_id": {
+    "$oid": "5f5f03e0640a347f286e354e"
+  },
+  "id": 1,
+  "categoryId": 1,
+  "value": 43.28,
+  "date": "2020-9-14",
+  "description": "Internet"
+},{
+  "_id": {
+    "$oid": "5f5f03e0640a347f286e354f"
+  },
+  "id": 2,
+  "categoryId": 1,
+  "value": 45.88,
+  "date": "2020-9-10",
+  "description": "Water"
+},{
+  "_id": {
+    "$oid": "5f5f03e0640a347f286e3550"
+  },
+  "id": 3,
+  "categoryId": 2,
+  "value": 168.45,
+  "date": "2020-9-14",
+  "description": "Shanghai"
+},{
+  "_id": {
+    "$oid": "5f5f03e0640a347f286e3551"
+  },
+  "id": 4,
+  "categoryId": 3,
+  "value": 13.28,
+  "date": "2020-9-14",
+  "description": "Shampoo"
+},{
+  "_id": {
+    "$oid": "5f5f03e0640a347f286e3552"
+  },
+  "id": 5,
+  "categoryId": 4,
+  "value": 8.66,
+  "date": "2020-9-14",
+  "description": "Coffee"
+},{
+  "_id": {
+    "$oid": "5f5f03e0640a347f286e3553"
+  },
+  "id": 6,
+  "categoryId": 5,
+  "value": 237.84,
+  "date": "2020-9-1",
+  "description": "Monthly Rent"
+},{
+  "_id": {
+    "$oid": "5f5f03e0640a347f286e3554"
+  },
+  "id": 7,
+  "categoryId": 6,
+  "value": 38.96,
+  "date": "2020-9-8",
+  "description": "wifi"
+},{
+  "_id": {
+    "$oid": "5f5f03e0640a347f286e3555"
+  },
+  "id": 8,
+  "categoryId": 7,
+  "value": 86.75,
+  "date": "2020-9-14",
+  "description": ""
+},{
+  "_id": {
+    "$oid": "5f5f03e0640a347f286e3556"
+  },
+  "id": 9,
+  "categoryId": 8,
+  "value": 16.88,
+  "date": "2020-9-14",
+  "description": "Movie"
+},{
+  "_id": {
+    "$oid": "5f5f03e0640a347f286e3557"
+  },
+  "id": 10,
+  "categoryId": 1,
+  "value": 55.87,
+  "date": "2020-8-14",
+  "description": "Gas"
+}]

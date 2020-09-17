@@ -1,0 +1,81 @@
+[{
+  "_id": {
+    "$oid": "5f5f0849640a347f286e3558"
+  },
+  "id": 1,
+  "value": 20,
+  "date": "2020-9-14",
+  "description": "Transfer"
+},{
+  "_id": {
+    "$oid": "5f5f0849640a347f286e3559"
+  },
+  "id": 2,
+  "value": 15,
+  "date": "2020-9-10",
+  "description": "Transfer"
+},{
+  "_id": {
+    "$oid": "5f5f0849640a347f286e355a"
+  },
+  "id": 3,
+  "value": 110.35,
+  "date": "2020-9-14",
+  "description": "Investment income"
+},{
+  "_id": {
+    "$oid": "5f5f0849640a347f286e355b"
+  },
+  "id": 4,
+  "value": 14.56,
+  "date": "2020-9-14",
+  "description": "Transfer"
+},{
+  "_id": {
+    "$oid": "5f5f0849640a347f286e355c"
+  },
+  "id": 5,
+  "value": 25.85,
+  "date": "2020-9-14",
+  "description": "Transfer"
+},{
+  "_id": {
+    "$oid": "5f5f0849640a347f286e355d"
+  },
+  "id": 6,
+  "value": 68.66,
+  "date": "2020-9-1",
+  "description": "Investment income"
+},{
+  "_id": {
+    "$oid": "5f5f0849640a347f286e355e"
+  },
+  "id": 7,
+  "value": 45,
+  "date": "2020-9-8",
+  "description": "Transfer"
+},{
+  "_id": {
+    "$oid": "5f5f0849640a347f286e355f"
+  },
+  "id": 8,
+  "value": 48.75,
+  "date": "2020-9-14",
+  "description": "Refund"
+},{
+  "_id": {
+    "$oid": "5f5f0849640a347f286e3560"
+  },
+  "id": 9,
+  "value": 18.5,
+  "date": "2020-9-14",
+  "description": "Transfer"
+},{
+  "_id": {
+    "$oid": "5f5f0849640a347f286e3561"
+  },
+  "id": 10,
+  "value": 1500,
+  "date": "2020-8-31",
+  "description": "Wage"
+}]

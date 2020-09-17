@@ -1,0 +1,49 @@
+[{
+  "_id": {
+    "$oid": "5f5ed136640a347f286e3544"
+  },
+  "id": 1,
+  "name": "Utilities"
+},{
+  "_id": {
+    "$oid": "5f5ed136640a347f286e3545"
+  },
+  "id": 2,
+  "name": "Travel"
+},{
+  "_id": {
+    "$oid": "5f5ed136640a347f286e3546"
+  },
+  "id": 3,
+  "name": "Groceries"
+},{
+  "_id": {
+    "$oid": "5f5ed136640a347f286e3547"
+  },
+  "id": 4,
+  "name": "Drinks"
+},{
+  "_id": {
+    "$oid": "5f5ed136640a347f286e3548"
+  },
+  "id": 5,
+  "name": "Rent"
+},{
+  "_id": {
+    "$oid": "5f5ed136640a347f286e3549"
+  },
+  "id": 6,
+  "name": "Cell Phone"
+},{
+  "_id": {
+    "$oid": "5f5ed136640a347f286e354a"
+  },
+  "id": 7,
+  "name": "Car Payments"
+},{
+  "_id": {
+    "$oid": "5f5ed136640a347f286e354b"
+  },
+  "id": 8,
+  "name": "Fun Money"
+}]

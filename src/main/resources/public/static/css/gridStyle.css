@@ -1,0 +1,39 @@
+#container{
+    display: grid;
+    grid-template-columns: 30% 45% 20%;
+    grid-template-rows: 40% 55%;
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+    height: 960px;
+}
+
+.item {
+    font-size: 4em;
+    text-align: center;
+    border: 1px solid #eeeeee;
+}
+
+#pieDiv {
+    background-color: #eeeeee;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+#detailDiv {
+    background-color: #eeeeee;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+#mainDiv {
+    background-color: #eeeeee;
+    /*text-align: center;*/
+}
+
+#dashboardDiv {
+    background-color: #eeeeee;
+}

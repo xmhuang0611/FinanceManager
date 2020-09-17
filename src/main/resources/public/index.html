@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+    <!-- 引入 Bootstrap -->
+    <link href="static/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!--  引入 css  -->
+    <link rel="stylesheet" href="static/css/gridStyle.css">
+    <link rel="stylesheet" href="static/css/home.css">
+
+    <!--  引入 lib  -->
+    <script src="static/jquery/jquery-1.12.4.js"></script>
+    <script src="static/bootstrap/js/bootstrap.js"></script>
+    <script src="static/lib/d3.v4.min.js"></script>
+    <script src="static/lib/laydate/laydate.js"></script>
+    <script src="static/lib/layer-v3.1.1/layer/layer.js"></script>
+    <script src="static/lib/layui/layui.js"></script>
+    <link rel="stylesheet" href="static/lib/layui/css/layui.css">
+    <script src="static/lib/d3pie.min.js"></script>
+    <script src="static/lib/echarts.min.js"></script>
+
+
+    <!--  引入 js 文件-->
+    <script src="static/js/variable.js"></script>
+    <script src="static/js/mainDiv.js"></script>
+    <script src="static/js/pieDiv.js"></script>
+    <script src="static/js/detailDiv.js"></script>
+    <script src="static/js/dashboardDiv.js"></script>
+    <script src="static/js/request.js"></script>
+
+</head>
+<body>
+    <div id="container">
+        <div class="item1" id="mainDiv">
+            <header>
+                <img src="static/images/citi.jpg" height="100" width="100" alt="Citi">
+                <span style="font-size: 24px; margin-left: 130px"><b>Home Budget</b></span>
+            </header>
+            <div style="margin: 0 0">
+                <ul class="layui-nav layui-nav-tree layui-bg-green" lay-filter="test" style="width: 100%" id="overView">
+                    <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
+                    <li class="layui-nav-item">
+                        <a style="float: right; " id="Expenses">46</a>
+                        <a href="javascript:;">Expenses</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a style="float: right;" id="Income">55</a>
+                        <a href="javascript:;">Income</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a style="float: right;" id="Budget">11</a>
+                        <a href="javascript:;">Budget</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a style="float: right;" id="Accounts">11</a>
+                        <a>Accounts</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="item2" id="pieDiv">
+            <div id="dateChose">
+                <text>Choose the Month</text><input type="text" class="date-input" id="dateInput">
+            </div>
+            <div id="main0" style="width: 100%; height: 430px">
+            </div>
+            <div id="main1" style="width: 100%; height: 430px">
+            </div>
+        </div>
+
+        <div class="item2" id="detailDiv">
+            <div class="tabbable" id="tabs-934632">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#panel-164898" data-toggle="tab">By Category</a>
+                    </li>
+                    <li>
+                        <a href="#panel-633698" data-toggle="tab">By Date</a>
+                    </li>
+                    <button style="float: right" data-method="confirmTrans" class="layui-btn" id="addCategory" onclick="addNewCategory()">+</button>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="panel-164898">
+                        <div class="panel-group" id="panel-961250">
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="panel-633698">
+                        <div class="panel-group" id="panel-961251">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="item1" id="dashboardDiv"></div>
+    </div>
+</body>
+</html>
