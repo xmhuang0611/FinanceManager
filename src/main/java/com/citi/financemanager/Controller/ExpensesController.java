@@ -1,6 +1,7 @@
 package com.citi.financemanager.Controller;
 
 import com.citi.financemanager.Entity.CategoriesEntity;
+import com.citi.financemanager.Entity.ExpenseCategory;
 import com.citi.financemanager.Entity.ExpensesEntity;
 import com.citi.financemanager.Service.ExpensesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 
 @RestController
@@ -74,7 +74,7 @@ public class ExpensesController {
 
     //get expenses sum of each cateogry
     @GetMapping(value = "/expenses_of_category", produces = {"application/json", "application/xml"})
-    public Map<String, Double> getCategoryExpense() {
+    public List<ExpenseCategory> getCategoryExpense() {
         return expensesService.getCategoryExpense();
     }
 

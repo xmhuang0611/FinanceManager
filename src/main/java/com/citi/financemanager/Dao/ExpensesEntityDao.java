@@ -1,9 +1,9 @@
 package com.citi.financemanager.Dao;
 
+import com.citi.financemanager.Entity.ExpenseCategory;
 import com.citi.financemanager.Entity.ExpensesEntity;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ExpensesEntityDao {
     public List<ExpensesEntity> getAllExpenses();
@@ -16,7 +16,7 @@ public interface ExpensesEntityDao {
 
     public double getTotalAccount();
 
-    public Map<String, Double> getCategoryExpense();
+    public List<ExpenseCategory> getCategoryExpense();
 
     public double getExpenses(String id);
 }

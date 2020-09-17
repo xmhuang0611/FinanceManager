@@ -4,12 +4,12 @@ import com.citi.financemanager.Dao.AccountEntityDao;
 import com.citi.financemanager.Dao.CategoriesEntityDao;
 import com.citi.financemanager.Dao.ExpensesEntityDao;
 import com.citi.financemanager.Entity.CategoriesEntity;
+import com.citi.financemanager.Entity.ExpenseCategory;
 import com.citi.financemanager.Entity.ExpensesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ExpensesServiceImpl implements ExpensesService {
@@ -64,7 +64,7 @@ public class ExpensesServiceImpl implements ExpensesService {
     }
 
     @Override
-    public Map<String, Double> getCategoryExpense() {
+    public List<ExpenseCategory> getCategoryExpense() {
         return expensesEntityDao.getCategoryExpense();
     }
 

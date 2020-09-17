@@ -2,10 +2,10 @@ package com.citi.financemanager.Service;
 
 
 import com.citi.financemanager.Entity.CategoriesEntity;
+import com.citi.financemanager.Entity.ExpenseCategory;
 import com.citi.financemanager.Entity.ExpensesEntity;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ExpensesService {
     public List<ExpensesEntity> getAllExpenses();
@@ -23,7 +23,7 @@ public interface ExpensesService {
     public void deleteItemInExpenses(ExpensesEntity expensesEntity);
 
 
-    public Map<String, Double> getCategoryExpense();
+    public List<ExpenseCategory> getCategoryExpense();
 
     public void updateExpense(ExpensesEntity expensesEntity);
 
