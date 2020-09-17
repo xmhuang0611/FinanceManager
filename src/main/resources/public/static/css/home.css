@@ -14,3 +14,7 @@
 #dateChose text, input{
     font-size: 24px;
 }
+
+#overView #Budget {
+    -webkit-user-modify: read-write;
+}

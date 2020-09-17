@@ -13,10 +13,16 @@ function drawDashboard() {
             type: "GET",
             // data: formData,
             // processData: false,
+            // async: false,
             contentType: "application/json",
             success: function (data) {
                 allExpense = getAllValue(data);
                 flagEx = 1;
+                if(flagEx && flagBu){
+                    flagEx = 0;
+                    flagBu = 0;
+                    drawDashPie(budgetVal, allExpense);
+                }
             },
             error: function (error) {
                 console.log(error);
@@ -28,20 +34,24 @@ function drawDashboard() {
             url: "/budget/details",
             dataType:"json",
             type: "GET",
+            // async: false,
             // data: formData,
             // processData: false,
             contentType: "application/json",
             success: function (data) {
                 budgetVal = getAllValue(data);
                 flagBu = 1;
+                if(flagEx && flagBu){
+                    flagEx = 0;
+                    flagBu = 0;
+                    drawDashPie(budgetVal, allExpense);
+                }
             },
             error: function (error) {
                 console.log(error);
             }
         });
-    if(flagEx && flagBu){
-        drawDashPie(budgetValue, allExpenses);
-    }
+
 }
 
 function getAllValue(getString) {
@@ -82,7 +92,8 @@ function drawDashPie(budgetValue, allExpenses) {
             "value": values[i],
             "color": colors[i],
         }
-    };
+    }
+    ;
 
     //var proportion = 30;
     var budgetNum = (Math.floor(proportion / 10) + 4) % 10;

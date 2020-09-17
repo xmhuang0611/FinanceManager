@@ -1,20 +1,20 @@
 #container{
     display: grid;
-    grid-template-columns: 30% 45% 20%;
+    grid-template-columns: 30% 45% 24%;
     grid-template-rows: 40% 55%;
     grid-row-gap: 10px;
-    grid-column-gap: 10px;
+    grid-column-gap: 8px;
     height: 960px;
 }
 
 .item {
     font-size: 4em;
     text-align: center;
-    border: 1px solid #eeeeee;
+    border: 1px solid #F1EFE5;
 }
 
 #pieDiv {
-    background-color: #eeeeee;
+    background-color: #F1EFE5;
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 1;
@@ -22,7 +22,7 @@
 }
 
 #detailDiv {
-    background-color: #eeeeee;
+    background-color: #F1EFE5;
     grid-column-start: 3;
     grid-column-end: 4;
     grid-row-start: 1;
@@ -30,10 +30,10 @@
 }
 
 #mainDiv {
-    background-color: #eeeeee;
+    background-color: #FFFFFF;
     /*text-align: center;*/
 }
 
 #dashboardDiv {
-    background-color: #eeeeee;
+    background-color: #F1EFE5;
 }

@@ -1,10 +1,52 @@
 function updateCategory(category) {
+    glovar.category = {};
     for(var i in category) {
-        glovar.category[category[i].id] = category[i].name;
+        glovar.category[category[i].name] = category[i].id;
     }
 }
 
-function updateDetailByCategory(expense) {
+function updateDetailByCategory(year, month) {
+
+    var expenseOrigin = d3.nest()
+        .key(function (d){
+            return d.categoryName;
+        })
+        .entries(glovar.expenseData);
+    var expense = [];
+    // 生成符合“日期”和“类别”的expense
+    for(var i in glovar.category) {
+        var value = [];
+        for(var j=0, len1=expenseOrigin.length; j <len1; j++) {
+            if(expenseOrigin[j].key === i && expenseOrigin[j].values && expenseOrigin[j].values.length > 0 ) {
+                for(var k=0, len2 = expenseOrigin[j].values.length; k <len2; k++) {
+                    let item = expenseOrigin[j].values[k];
+                    if(
+                        // selectDate && selectDate !== '' &&
+                        month === (new Date(item.date).getMonth() +1)
+                        && year === new Date(item.date).getFullYear()
+                    ) {
+                        let newItem = {}
+                        for(var prop in item) {
+                            newItem[prop] = item[prop];
+                        }
+                        value.push(newItem);
+                    }
+                }
+                break;
+            }
+        }
+        expense.push({
+            "key": i,
+            "values": value
+        })
+    }
+
+    console.log(expense);
+
+    // 清空之前的内容
+    d3.select("#panel-961250")
+        .selectAll("div.panel")
+        .remove();
 
     var categaoryDiv = d3.select("#panel-961250")
         .selectAll("div.panel")
@@ -38,8 +80,8 @@ function updateDetailByCategory(expense) {
         .style("float", "right")
         .style("width", "20px")
         .on('click', function () {
-            var id = d3.select(this).data()[0].key;
-            deleteCategoryInDB(id);
+            var name = d3.select(this).data()[0].key;
+            deleteCategoryInDB(name);
             d3.select(this.parentElement.parentElement).remove();
         })
 
@@ -96,7 +138,28 @@ function updateDetailByCategory(expense) {
 
 }
 
-function updateDetailByDate(expense) {
+function updateDetailByDate(year, month) {
+
+    var expenseOrigin = [];
+
+    for(let i=0, len=glovar.expenseData.length; i<len; i++) {
+        let itemDate = new Date(glovar.expenseData[i].date);
+        if(itemDate.getFullYear() === year && itemDate.getMonth() === (month-1)){
+            var _obj = JSON.stringify(glovar.expenseData[i]);
+            expenseOrigin.push(JSON.parse(_obj));
+        }
+    }
+
+    var expense = d3.nest()
+        .key(function (d){
+            return d.date;
+        })
+        .entries(expenseOrigin);
+
+
+    d3.select("#panel-961251")
+        .selectAll("div.panel")
+        .remove();
 
     var categaoryDiv = d3.select("#panel-961251")
         .selectAll("div.panel")
@@ -131,8 +194,8 @@ function updateDetailByDate(expense) {
         .style("float", "right")
         .style("width", "20px")
         .on('click', function () {
-            var id = d3.select(this).data()[0].key;
-            deleteCategoryInDB(id);
+            var name = d3.select(this).data()[0].key;
+            deleteCategoryInDB(name);
             d3.select(this.parentElement.parentElement).remove();
         })
 
@@ -191,20 +254,25 @@ function addNewCategory() {
     layer.prompt({title: 'Please Add new category', offset: [100, document.body.clientWidth - 300]},function(val, index){
         addCategoryToDB(val);
         layer.msg(val + ' category add success!');
+        // layer.lang("en");
         layer.close(index);
     });
 }
 
-function deleteCategoryInDB(id){
+function deleteCategoryInDB(name){
+    var id = glovar.category[name];
     $.ajax(
         {
             url: "/expenses/category/delete/" + id,
-            type: "POST",
+            type: "DELETE",
             processData: false,
-            data: {},
+            // data: {},
             contentType: false,
             success: function (data) {
                 console.log("Delete success!");
+                request();
+                let month = parseInt($("#dateInput").val().split('-')[1]);
+                drawPie(month);
             },
             error: function (error) {
                 console.log(error);
@@ -213,32 +281,59 @@ function deleteCategoryInDB(id){
 }
 
 function addCategoryToDB(val) {
-    var formData = new FormData();
     $.ajaxSetup({
         data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
     });
-    formData.append("Name", val)
+
+    // var formData = new FormData();
+    // formData.append('Name', val);
 
 
-    // var formData = [];
-    // formData.push({"Name": val});
+    var formData = {"name": val};
+
     $.ajax(
         {
             url: "/expenses/category_add",
-            type: "POST",
-            data: formData,
-            dataType: "text",
+            type: "PUT",
+            data: JSON.stringify(formData),
+            // data: formData,
+            dataType: "application/json",
             processData: false,
-            contentType: false,
-            success: function (data) {
+            contentType: "application/json;charset=UTF-8",
+            success: function (d) {
                 // console.log(data);
                 console.log("Add success!");
+                // request();
+                // let month = parseInt($("#dateInput").val().split('-')[1]);
+                // drawPie(month);
             },
             error: function (error) {
                 console.log(error);
+                $.ajax(
+                    {
+                        url: "/expenses/categories",
+                        dataType:"json",
+                        type: "GET",
+                        // data: formData,
+                        // processData: false,
+                        contentType: "application/json",
+                        success: function (data) {
+                            // var jsonData = $.parseJSON(data);
+                            // updatePieChart(jsonData);
+                            // updateDetail(jsonData);
+                            console.log(data);
+                            // updateCategory(data);
+                            request();
+                            let month = parseInt($("#dateInput").val().split('-')[1]);
+                            drawPie(month);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
             }
         });
-    addCategoryToView(val);
+    // addCategoryToView(val);
 }
 
 function addCategoryToView(val) {
@@ -268,10 +363,10 @@ function addCategoryToView(val) {
         .style("float", "right")
         .style("width", "20px")
         .on('click', function () {
-            // var id = d3.select(this).data()[0].key;
-            // deleteCategoryInDB(id);
+            var name = this.parentElement.firstElementChild.innerText;
+            deleteCategoryInDB(name);
             d3.select(this.parentElement.parentElement).remove();
-        })
+        });
 
     contentDiv.append("a")
         .attr("class", "panel-title")
@@ -281,29 +376,4 @@ function addCategoryToView(val) {
         .style("float", "right")
         .style("margin-right", "8px")
         .text("$0");
-}
-
-function addNewCategory1() {
-    layer.open({
-        type: 1
-        ,offset: [100, document.body.clientWidth - 300]
-        ,shadeClose: true //点击遮罩关闭
-        ,content: '\<\div style="padding:20px;">自定义内容\<\/div>'
-        ,time: 0 //不自动关闭
-        ,btn: ['订单错误', '发票错误']
-        ,yes: function(index){
-            layer.close(index);
-            layer.prompt({title: '请描述退回原因'},function(val, index){
-                layer.msg('得到了订单'+val);
-                layer.close(index);
-            });
-        }
-        ,btn2: function(index){
-            layer.close(index);
-            layer.prompt(function(val, index){
-                layer.msg('得到了发票'+val);
-                layer.close(index);
-            });
-        }
-    });
 }

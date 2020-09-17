@@ -1,6 +1,8 @@
-function drawPie() {
+var monthTime;
+function drawPie(month) {
+
     var getIncomeValue = function (getString) {
-        var dIValue = [0,0,0,0];
+        var dIValue = [0, 0, 0, 0];
         for (var i = 0; i < getString.length; i++) {
             switch (getString[i].description) {
                 case "Transfer":
@@ -20,7 +22,6 @@ function drawPie() {
         return dIValue;
     }
 
-
     var getCategory = function (string) {
         var dELabel = [];
         for (var i = 0; i < string.length; i++) {
@@ -29,172 +30,307 @@ function drawPie() {
         return dELabel
     }
 
-    function updateExpensePie(Category) {
-        var myChart = echarts.init(document.getElementById('main0'));
+    function updateExpensesCategory(CategoryValue) {
 
-        var dataExpensesValue = new Array([Category.length]);
-        for (var i = 0; i < Category.length; i++) {
-            dataExpensesValue[i] = Math.ceil(Math.random() * 100);
-        }
-        var dataExpensesLabel = getCategory(Category);
+        $.ajax(
+            {
+                url: "/expenses/categories",
+                dataType: "json",
+                type: "GET",
+                // data: formData,
+                // processData: false,
+                contentType: "application/json",
+                success: function (data) {
+                    // var jsonData = $.parseJSON(data);
+                    // updatePieChart(jsonData);
+                    // updateDetail(jsonData);
+                    console.log(data);
+                    updateCategory(data);
 
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
 
-        var mydata = new Array([dataExpensesLabel.length]);
-        for (var i = 0; i < dataExpensesLabel.length; i++) {
-            mydata[i] = {
-                value: dataExpensesValue[i],
-                name: dataExpensesLabel[i],
-            }
-        }
-        console.log("1111111111111111111111111111111");
-        console.log(mydata);
-        // 指定图表的配置项和数据
-        var option = {
-            title: {
-                text: 'Expense Category',
-                left: 'center',
-                fontSize: 30,
-                padding: [30, 0, 0, 0]
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: '{a} <br/>{b} : {c} ({d}%)',
+        function updateCategory(Category) {
 
-            },
-            legend: {
-                icon: 'roundRect',
-                type: 'scroll',
-                orient: 'vertical',
-                left: '1%',
-                data: dataExpensesLabel,
-                padding: [150, 100, 0, 50]
-            },
-            series: [{
-                name: 'Account',
-                type: 'pie',
-                radius: '70%',
-                center: ['60%', '60%'],
-                data: mydata,
-                emphasis: {
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+            var getcategoryID = function (string) {
+                var cateID = 0;
+                for (var i = 0; i < Category.length; i++) {
+                    if (string == Category[i].name) {
+                        cateID = i;
+                        break;
                     }
                 }
-            }],
-        };
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option, true);
-        //}
+                return cateID
+            }
+
+            var myChart = echarts.init(document.getElementById('main0'));
+            let selectDate = document.getElementById("dateInput").value;
+            // var selectDate = "2020-9";
+            var categoryNum = Category.length;
+
+            var dataExpensesValue = new Array([categoryNum]);
+            for (var i = 0; i < categoryNum; i++) {
+                dataExpensesValue[i] = 0.0;
+            }
+            var cDate = "";
+            var categoryValueNum = CategoryValue.length;
+            var categoryID = 0;
+            for (var i = 0; i < categoryValueNum; i++) {
+                cDate = CategoryValue[i].date;
+                if (selectDate && selectDate !== ''
+                    && parseInt(selectDate.split('-')[1]) === (new Date(cDate).getMonth() + 1)
+                    && parseInt(selectDate.split('-')[0]) === new Date(cDate).getFullYear()) {
+                    categoryID = getcategoryID(CategoryValue[i].categoryName);
+                    dataExpensesValue[categoryID] += CategoryValue[i].value;
+                }
+            }
+
+            // var dataExpensesValue = new Array([Category.length]);
+            // for (var i = 0; i < Category.length; i++) {
+            //     dataExpensesValue[i] = Math.ceil(Math.random() * 100);
+            // }
+            //var dataExpensesValue = getCategoryValue(CategoryValue);
+
+            var dataExpensesLabel = getCategory(Category);
+
+            var mydata = new Array([dataExpensesLabel.length]);
+            for (var i = 0; i < dataExpensesLabel.length; i++) {
+                mydata[i] = {
+                    value: dataExpensesValue[i].toFixed(2),
+                    name: dataExpensesLabel[i],
+                }
+            }
+
+            // 指定图表的配置项和数据
+            var option = {
+                title: {
+                    text: 'Expense Category',
+                    left: 'center',
+                    fontSize: 35,
+                    padding: [20, 0, 0, 0]
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b} : {c} ({d}%)',
+
+                },
+                legend: {
+                    icon: 'roundRect',
+                    type: 'scroll',
+                    orient: 'vertical',
+                    left: '3%',
+                    data: dataExpensesLabel,
+                    padding: [150, 100, 0, 10],
+                    fontSize: 40,
+                },
+                series: [{
+                    name: 'Expense',
+                    type: 'pie',
+                    radius: '68%',
+                    center: ['56%', '58%'],
+                    data: mydata,
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }],
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option, true);
+        }
     }
 
     function updateIncomePie(getIncome) {
 
+        var myChart2 = echarts.init(document.getElementById('main1'));
+
         var names = ["Transfer", "Investment income", "Refund", "Wage"];
-        var color = ["#e4ee52", "#75e772", "#e55ca2", "#60d4e7"];
+        //var color = ["#e4ee52", "#75e772", "#e55ca2", "#60d4e7"];
         var value = getIncomeValue(getIncome);
-        console.log(value);
 
         var dataIncome = new Array([names.length]);
         for (var i = 0; i < names.length; i++) {
-            dataIncome[i] = {
-                "label": names[i],
-                "value": parseFloat(value[i]),
-                "color": color[i]
-            }
+            dataIncome[i] = parseFloat(value[i])
+        }
+
+        var option2 = {
+            title: {
+                text: 'Income Distribution',
+                left: 'center',
+                fontSize: 35,
+            },
+
+            dataset: {
+                source: [
+                    ['score', 'Value', 'Account'],
+                    [50, dataIncome[0], 'Transfer'],
+                    [75, dataIncome[1], 'Investment income'],
+                    [25, dataIncome[2], 'Refund'],
+                    [100, dataIncome[3], 'Wage'],
+                ]
+            },
+            grid: {containLabel: true},
+            xAxis: {name: 'Value'},
+            yAxis: {type: 'category'},
+            visualMap: {
+                orient: 'horizontal',
+                left: 'center',
+                min: 10,
+                max: 100,
+                text: ['High Value', 'Low Value'],
+                // Map the score column to color
+                dimension: 0,
+                inRange: {
+                    color: ['#D7DA8B', '#E15457']
+                }
+            },
+            series: [
+                {
+                    type: 'bar',
+                    encode: {
+                        // Map the "amount" column to X axis.
+                        x: 'Value',
+                        // Map the "product" column to Y axis
+                        y: 'Account'
+                    }
+                }
+            ]
         };
-        console.log(value);
-        var pie = new d3pie("main1", {
-            "header": {
-                "title": {
-                    "text": "Account Income",
-                    "color": "#2f0c1c",
-                    "fontSize": 25,
-                    "font": "courier"
-                },
-                "subtitle": {
-                    "color": "#999999",
-                    "fontSize": 10,
-                    "font": "courier"
-                },
-                "location": "pie-center",
-                "titleSubtitlePadding": 10
-            },
-            "footer": {
-                "color": "#999999",
-                "fontSize": 10,
-                "font": "open sans",
-                "location": "bottom-left"
-            },
-            "size": {
-                "canvasWidth": 750,
-                "pieInnerRadius": "75%",
-                "pieOuterRadius": "78%"
-            },
-            "data": {
-                "content": dataIncome,
-            },
-            "labels": {
-                "outer": {
-                    "format": "label-percentage1",
-                    "pieDistance": 20
-                },
-                "inner": {
-                    "format": "none"
-                },
-                "mainLabel": {
-                    "fontSize": 15
-                },
-                "percentage": {
-                    "color": "#868ca3",
-                    "fontSize": 15,
-                    "decimalPlaces": 0
-                },
-                "value": {
-                    "color": "#cccc43",
-                    "fontSize": 15
-                },
-                "lines": {
-                    "enabled": true,
-                    "style": "straight"
-                },
-                "truncation": {
-                    "enabled": true
-                }
-            },
-            "effects": {
-                "pullOutSegmentOnClick": {
-                    "effect": "linear",
-                    "speed": 400,
-                    "size": 8
-                }
-            },
-            "misc": {
-                "colors": {
-                    "segmentStroke": "#000000"
-                }
-            }
-        });
-        //}
+        myChart2.setOption(option2, true);
     }
 
+    var date = $("#dateInput").val();
+    var budgetVal = 0;
+    var allExpense = 0;
+    var flagEx = 0;
+    var flagBu = 0;
+    monthTime = month;
+
+    //var monthTime = 0;
+    function updateExpensePie(budgetValue, allExpenses) {
+
+        //monthTime = document.getElementById("dateInput").value;
+        console.log(monthTime);
+        var proportion = 0;
+        if ((budgetValue[monthTime-1] == 0)||
+            ([1,2,3,4,5,6,7,8,9,10,11,12].indexOf(monthTime) == -1)){
+        }else {
+            proportion = Math.ceil(allExpenses[monthTime-1] / budgetValue[monthTime-1] * 100);
+            if (proportion >= 100) {
+                proportion = 100;
+            }
+        }
+        console.log(proportion);
+
+        // var dataBudgetExpenseLabel = []
+        // var dataBudgetExpenseValue = []
+        // for(var i in budgetExpense){
+        //     dataBudgetExpenseLabel.push(i)
+        //     dataBudgetExpenseValue.push(budgetExpense[i])
+        //
+        // }
+        //console.log(dataBudgetExpenseValue);
+
+        var budgetExpenseChart = echarts.init(document.getElementById('main2'));
+
+        var budgetExpenseoption = {
+            title: {
+                text: 'Budget Utilization',
+                left: 'center',
+                c: 35,
+                padding: [0, 0, 0, 0],
+            },
+
+            tooltip: {
+                formatter: '{a} <br/>{b} : {c}%'
+            },
+            toolbox: {
+                feature: {
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            series: [
+                {
+                    name: 'Budget',
+                    type: 'gauge',
+                    detail: {formatter: '{value}%'},
+                    data: [{value: 50+"%", name: '', color: '#f1f111'}]
+                }
+            ]
+        };
+
+        budgetExpenseoption.series[0].data[0].value = (proportion).toFixed(2) - 0;
+        budgetExpenseChart.setOption(budgetExpenseoption, true);
+
+    }
+
+    function getAllValue(getString) {
+        var dEValue = [0,0,0,0,0,0,0,0,0,0,0,0];
+        for (var i = 0; i < getString.length; i++) {
+            var date = new Date(getString[i].date);
+            var Month = date.getMonth();
+            dEValue[Month] += getString[i].value;
+        }
+        return dEValue;
+    }
+
+    function getBudgetValue(getString) {
+        var dBValue = [0,0,0,0,0,0,0,0,0,0,0,0];
+        var monthMun = 0;
+        for (var i = 0; i < getString.length; i++) {
+            monthMun = getString[i].dateByMonth.split('-')[1];
+            dBValue[monthMun-1] = getString[i].value;
+        }
+        return dBValue;
+    }
 
     $.ajax(
         {
-            url: "/expenses/categories",
-            dataType:"json",
+            url: "/expenses/details",
+            dataType: "json",
             type: "GET",
+            // data: formData,
+            // processData: false,
+            // async: false,
+            contentType: "application/json",
+            success: function (data) {
+                allExpense = getAllValue(data);
+                flagEx = 1;
+                if (flagEx && flagBu) {
+                    flagEx = 0;
+                    flagBu = 0;
+                    updateExpensePie(budgetVal, allExpense);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+    $.ajax(
+        {
+            url: "/budget/details",
+            dataType: "json",
+            type: "GET",
+            // async: false,
             // data: formData,
             // processData: false,
             contentType: "application/json",
             success: function (data) {
-                // var jsonData = $.parseJSON(data);
-                // updatePieChart(jsonData);
-                // updateDetail(jsonData);
-                console.log(data);
-                updateExpensePie(data);
-
+                budgetVal = getBudgetValue(data);
+                flagBu = 1;
+                if (flagEx && flagBu) {
+                    flagEx = 0;
+                    flagBu = 0;
+                    updateExpensePie(budgetVal, allExpense);
+                }
             },
             error: function (error) {
                 console.log(error);
@@ -204,7 +340,7 @@ function drawPie() {
     $.ajax(
         {
             url: "/income/details",
-            dataType:"json",
+            dataType: "json",
             type: "GET",
             // data: formData,
             // processData: false,
@@ -222,24 +358,24 @@ function drawPie() {
             }
         });
 
-    // $.ajax(
-    //     {
-    //         url: "/expenses/categories",
-    //         dataType:"json",
-    //         type: "GET",
-    //         // data: formData,
-    //         // processData: false,
-    //         contentType: "application/json",
-    //         success: function (data) {
-    //             // var jsonData = $.parseJSON(data);
-    //             // updatePieChart(jsonData);
-    //             // updateDetail(jsonData);
-    //             console.log(data);
-    //             updateExpensePie(data);
-    //
-    //         },
-    //         error: function (error) {
-    //             console.log(error);
-    //         }
-    //     });
+    $.ajax(
+        {
+            url: "/expenses/details",
+            dataType: "json",
+            type: "GET",
+            // data: formData,
+            // processData: false,
+            contentType: "application/json",
+            success: function (data) {
+                // var jsonData = $.parseJSON(data);
+                // updatePieChart(jsonData);
+                // updateDetail(jsonData);
+                console.log(data);
+                updateExpensesCategory(data);
+
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
 }

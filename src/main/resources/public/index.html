@@ -17,7 +17,6 @@
     <script src="static/jquery/jquery-1.12.4.js"></script>
     <script src="static/bootstrap/js/bootstrap.js"></script>
     <script src="static/lib/d3.v4.min.js"></script>
-    <script src="static/lib/d3.min.js"></script>
     <script src="static/lib/laydate/laydate.js"></script>
     <script src="static/lib/layer-v3.1.1/layer/layer.js"></script>
     <script src="static/lib/layui/layui.js"></script>
@@ -40,25 +39,25 @@
         <div class="item1" id="mainDiv">
             <header>
                 <img src="static/images/citi.jpg" height="100" width="100" alt="Citi">
-                <span style="font-size: 24px; margin-left: 130px"><b>Home Budget</b></span>
+                <span style="font-size: 24px; margin-left: 50px"><b>Personal Finance Manager</b></span>
             </header>
             <div style="margin: 0 0">
-                <ul class="layui-nav layui-nav-tree layui-bg-green" lay-filter="test" style="width: 100%" id="overView">
+                <ul class="layui-nav layui-nav-tree layui-bg-cyan" lay-filter="test" style="width: 100%; background-color: #eeeeee" id="overView">
                     <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
                     <li class="layui-nav-item">
-                        <a style="float: right; " id="Expenses">46</a>
+                        <a style="float: right; " id="Expenses">$</a>
                         <a href="javascript:;">Expenses</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a style="float: right;" id="Income">55</a>
+                        <a style="float: right;" id="Income">$</a>
                         <a href="javascript:;">Income</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a style="float: right;" id="Budget">11</a>
-                        <a href="javascript:;">Budget</a>
+                        <a style="float: right;" id="Budget">$</a>
+                        <a >Budget</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a style="float: right;" id="Accounts">11</a>
+                        <a style="float: right;" id="Accounts">$</a>
                         <a>Accounts</a>
                     </li>
                 </ul>
@@ -66,8 +65,10 @@
         </div>
 
         <div class="item2" id="pieDiv">
-            <div id="dateChose">
-                <text>Choose the Month</text><input type="text" class="date-input" id="dateInput">
+            <br/>
+            <div id="dateChose" >
+                <text style="vertical-align:middle;">Choose the Month</text>
+                <input type="text" value="2020-09" class="date-input" id="dateInput" style="text-align:center;vertical-align:middle;height:28px;font-size: 18px">
             </div>
             <div id="main0" style="width: 100%; height: 430px">
             </div>
@@ -99,7 +100,18 @@
             </div>
         </div>
 
-        <div class="item1" id="dashboardDiv"></div>
+        <div class="item1" id="dashboardDiv">
+<!--            <div id="inputMonth" style="padding: 40px 0px 0px 70px">-->
+<!--                Choose the Month:<input type="text" size="15" id="dateTime"/><span id="span_dateTime"></span>-->
+<!--                <input type="button" value="OK" onclick="updateExpensePie()" />-->
+<!--            </div>-->
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div id="main2" style="width: 100%; height: 430px"></div>
+        </div>
     </div>
 </body>
 </html>

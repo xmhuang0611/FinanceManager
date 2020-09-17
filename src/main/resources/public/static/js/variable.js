@@ -5,5 +5,6 @@
 var globalVariable = function () {
     var ret = {};
     ret.category= {};
+    ret.expenseData = [];
     return ret;
 };
