@@ -82,8 +82,7 @@ function drawDashPie(budgetValue, allExpenses) {
             "value": values[i],
             "color": colors[i],
         }
-    }
-    ;
+    };
 
     //var proportion = 30;
     var budgetNum = (Math.floor(proportion / 10) + 4) % 10;
