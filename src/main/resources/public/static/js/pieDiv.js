@@ -37,7 +37,7 @@ function drawPie() {
             dataExpensesValue[i] = Math.ceil(Math.random() * 100);
         }
         var dataExpensesLabel = getCategory(Category);
-        //console.log(Category);
+
 
         var mydata = new Array([dataExpensesLabel.length]);
         for (var i = 0; i < dataExpensesLabel.length; i++) {
@@ -46,14 +46,15 @@ function drawPie() {
                 name: dataExpensesLabel[i],
             }
         }
-
+        console.log("1111111111111111111111111111111");
+        console.log(mydata);
         // 指定图表的配置项和数据
         var option = {
             title: {
                 text: 'Expense Category',
                 left: 'center',
                 fontSize: 30,
-                padding: [0, 0, 0, 0]
+                padding: [30, 0, 0, 0]
             },
             tooltip: {
                 trigger: 'item',
@@ -64,9 +65,9 @@ function drawPie() {
                 icon: 'roundRect',
                 type: 'scroll',
                 orient: 'vertical',
-                left: '2%',
+                left: '1%',
                 data: dataExpensesLabel,
-                padding: [110, 0, 0, 50]
+                padding: [150, 100, 0, 50]
             },
             series: [{
                 name: 'Account',
@@ -181,7 +182,7 @@ function drawPie() {
 
     $.ajax(
         {
-            url: "/expenses/details",
+            url: "/expenses/categories",
             dataType:"json",
             type: "GET",
             // data: formData,
@@ -220,4 +221,25 @@ function drawPie() {
                 console.log(error);
             }
         });
+
+    // $.ajax(
+    //     {
+    //         url: "/expenses/categories",
+    //         dataType:"json",
+    //         type: "GET",
+    //         // data: formData,
+    //         // processData: false,
+    //         contentType: "application/json",
+    //         success: function (data) {
+    //             // var jsonData = $.parseJSON(data);
+    //             // updatePieChart(jsonData);
+    //             // updateDetail(jsonData);
+    //             console.log(data);
+    //             updateExpensePie(data);
+    //
+    //         },
+    //         error: function (error) {
+    //             console.log(error);
+    //         }
+    //     });
 }
