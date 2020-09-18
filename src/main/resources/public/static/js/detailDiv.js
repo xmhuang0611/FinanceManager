@@ -85,6 +85,16 @@ function updateDetailByCategory(year, month) {
             d3.select(this.parentElement.parentElement).remove();
         })
 
+    contentDiv.append("button")
+        .text('+')
+        .style("float", "right")
+        .style("width", "20px")
+        // .attr("class", "layui-btn")
+        .on('click', function () {
+            var category = d3.select(this).data()[0].key;
+            addNewExpense(category);
+        })
+
     contentDiv.append("a")
         .attr("class", "panel-title")
         .attr("data-toggle", "collapse")
@@ -251,12 +261,15 @@ function updateDetailByDate(year, month) {
 }
 
 function addNewCategory() {
-    layer.prompt({title: 'Please Add new category', offset: [100, document.body.clientWidth - 300]},function(val, index){
-        addCategoryToDB(val);
-        layer.msg(val + ' category add success!');
-        // layer.lang("en");
-        layer.close(index);
-    });
+    layer.prompt({title: 'Please Add new category',
+        offset: [100, document.body.clientWidth - 300],
+        btn: ["add", "cancel"]},
+        function(val, index){
+            addCategoryToDB(val);
+            layer.msg(val + ' category add success!');
+            // layer.lang("en");
+            layer.close(index);
+        });
 }
 
 function deleteCategoryInDB(name){
@@ -376,4 +389,92 @@ function addCategoryToView(val) {
         .style("float", "right")
         .style("margin-right", "8px")
         .text("$0");
+}
+
+function addNewExpense(categaory) {
+    layer.prompt({
+            title: 'Please Add new expense item',
+            formType: 0,
+            placeholder: 'Please enter expense description',
+            offset: [100, document.body.clientWidth - 300],
+            btn: ["add", "cancel"]},
+        function(val, index, elem){
+            let exVal = $("#exVal").val();
+            let exDate = $("#exDate").val();
+
+            let sDate = new Date(exDate);
+            exDate = sDate.getFullYear() + '-' + (sDate.getMonth() + 1) + '-' + sDate.getDate();
+            // description, value, date, category
+            addExpenseToDB(val, exVal, exDate, categaory);
+            layer.msg(val + ' expense add success!');
+            // layer.lang("en");
+            layer.close(index);
+        });
+    $(".layui-layer-content").append("<br/>" +
+        "<input type=\"text\" id= \"exVal\" class=\"layui-input\" placeholder=\"Please enter expense value\"/><br/>" +
+        "<input type=\"date\" lang=\"en\" id= \"exDate\" value='2020-9-18' class=\"layui-input\" placeholder=\"Please enter expense date\"/>")
+}
+
+function addExpenseToDB(val, exVal, exDate, categaory) {
+    $.ajaxSetup({
+        data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+    });
+
+    // var formData = new FormData();
+    // formData.append('Name', val);
+
+
+    var formData = {
+        "categoryName": categaory,
+        "value": parseFloat(exVal),
+        "date": exDate,
+        "description": val
+    };
+
+    $.ajax(
+        {
+            url: "/expenses/expenses_add",
+            type: "PUT",
+            data: JSON.stringify(formData),
+            // data: formData,
+            dataType: "application/json",
+            processData: false,
+            contentType: "application/json;charset=UTF-8",
+            success: function (d) {
+                // console.log(data);
+                console.log("Add success!");
+                // request();
+                // let month = parseInt($("#dateInput").val().split('-')[1]);
+                // drawPie(month);
+            },
+            error: function (error) {
+                console.log(error);
+                request();
+                let month = parseInt($("#dateInput").val().split('-')[1]);
+                drawPie(month);
+                updateMain();
+            }
+        });
+    // addCategoryToView(val);
+}
+
+function deleteExpenseInDB(name){
+    var id = glovar.category[name];
+    $.ajax(
+        {
+            url: "/expenses/expenses_delete/" + id,
+            type: "DELETE",
+            processData: false,
+            // data: {},
+            contentType: false,
+            success: function (data) {
+                console.log("Delete success!");
+                request();
+                let month = parseInt($("#dateInput").val().split('-')[1]);
+                drawPie(month);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
 }

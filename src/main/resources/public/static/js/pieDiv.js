@@ -2,20 +2,30 @@ var monthTime;
 function drawPie(month) {
 
     var getIncomeValue = function (getString) {
+        var year = 2020;
+        var incomeValueString = [];
+        for(let i=0, len=getString.length; i<len; i++) {
+            let itemDate = new Date(getString[i].date);
+            if(itemDate.getFullYear() === year && itemDate.getMonth() === (month-1)){
+                var _obj = JSON.stringify(getString[i]);
+                incomeValueString.push(JSON.parse(_obj));
+            }
+        }
+
         var dIValue = [0, 0, 0, 0];
-        for (var i = 0; i < getString.length; i++) {
+        for (var i = 0; i < incomeValueString.length; i++) {
             switch (getString[i].description) {
                 case "Transfer":
-                    dIValue[0] += getString[i].value;
+                    dIValue[0] += incomeValueString[i].value;
                     continue;
                 case "Investment income":
-                    dIValue[1] += getString[i].value;
+                    dIValue[1] += incomeValueString[i].value;
                     continue;
                 case "Refund":
-                    dIValue[2] += getString[i].value;
+                    dIValue[2] += incomeValueString[i].value;
                     continue;
                 case "Wage":
-                    dIValue[3] += getString[i].value;
+                    dIValue[3] += incomeValueString[i].value;
                     continue;
             }
         }
@@ -146,6 +156,16 @@ function drawPie(month) {
         }
     }
 
+    var compare = function (x, y) {//比较函数
+        if (x < y) {
+            return -1;
+        } else if (x > y) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     function updateIncomePie(getIncome) {
 
         var myChart2 = echarts.init(document.getElementById('main1'));
@@ -159,9 +179,12 @@ function drawPie(month) {
             dataIncome[i] = parseFloat(value[i])
         }
 
+        var dataIncomeSort = JSON.parse(JSON.stringify(dataIncome));
+        dataIncomeSort.sort(compare);
+
         var option2 = {
             title: {
-                text: 'Income Distribution',
+                text: 'The Source of Income',
                 left: 'center',
                 fontSize: 35,
             },
@@ -169,10 +192,10 @@ function drawPie(month) {
             dataset: {
                 source: [
                     ['score', 'Value', 'Account'],
-                    [50, dataIncome[0], 'Transfer'],
-                    [75, dataIncome[1], 'Investment income'],
-                    [25, dataIncome[2], 'Refund'],
-                    [100, dataIncome[3], 'Wage'],
+                    [dataIncomeSort.indexOf(dataIncome[0]), dataIncome[0], 'Transfer'],
+                    [dataIncomeSort.indexOf(dataIncome[1]), dataIncome[1], 'Investment income'],
+                    [dataIncomeSort.indexOf(dataIncome[2]), dataIncome[2], 'Refund'],
+                    [dataIncomeSort.indexOf(dataIncome[3]), dataIncome[3], 'Wage'],
                 ]
             },
             grid: {containLabel: true},
@@ -181,8 +204,8 @@ function drawPie(month) {
             visualMap: {
                 orient: 'horizontal',
                 left: 'center',
-                min: 10,
-                max: 100,
+                min: 0,
+                max: 3,
                 text: ['High Value', 'Low Value'],
                 // Map the score column to color
                 dimension: 0,

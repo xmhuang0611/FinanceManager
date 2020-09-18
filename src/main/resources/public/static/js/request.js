@@ -142,8 +142,10 @@ function refreshBudget(val) {
     if(selectDate && selectDate === '') {
         selectDate = new Date().getFullYear() + '-' + (new Date().getMonth() + 1);
     }
+    let sDate = new Date(selectDate+"-01");
+    selectDate = sDate.getFullYear() + '-' + (sDate.getMonth() + 1);
     var formData = {
-        'id': '5f60dc4279523ee91c0c6d61',
+        // 'id': '5f60dc4279523ee91c0c6d61',
         'dateByMonth': selectDate,
         'value': parseInt(val)
         // ,'date': '2020-9-16'
@@ -171,6 +173,8 @@ function refreshBudget(val) {
                 console.log("modify budget success!");
             },
             error: function (error) {
+                let month = parseInt(selectDate.split("-")[1]);
+                drawPie(month);
                 console.log(error);
             }
         });
